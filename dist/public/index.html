@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Photo Uploader</title>
+  </head>
+  <body>
+    <input id="file" type="file" name="photo" />
+    <button id="uploadbtn">upload</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const uploadForm = document.getElementById("mainform");
+      const file = document.querySelector("#file");
+      document.getElementById("uploadbtn").onclick = () => {
+        console.log(file);
+      };
+      function handleUpload(e) {
+        console.log(file);
+        console.log("handling upload");
+      }
+      const socket = io();
+      socket.on("newPhoto", (filename) => {
+        console.log(`New photo uploaded: ${filename}`);
+      });
+    </script>
+  </body>
+</html>
