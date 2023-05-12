@@ -1,2 +1,2 @@
-# denkuan_sebaria
-denkuan_sebaria
+# denkuan_sebari
+denkuan_sebari
