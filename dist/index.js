@@ -116,7 +116,9 @@ app.get("/start", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!hostIp) {
         return res.status(400).json({ error: "Unable to determine host IP" });
     }
-    yield generateQRCode(hostIp, savePath);
+    const url = `http://${hostIp}:3000/uploads/qrcode.png`;
+    const qrData = { host: hostIp, url: url };
+    yield generateQRCode(JSON.stringify(qrData), savePath);
     res.sendFile(path_1.default.join(publicPath, "index.html"));
 }));
 app.post("/generate-qrcode", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

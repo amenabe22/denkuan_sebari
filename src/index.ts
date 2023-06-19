@@ -105,8 +105,10 @@ app.get("/start", async (req, res) => {
   if (!hostIp) {
     return res.status(400).json({ error: "Unable to determine host IP" });
   }
+  const url = `http://${hostIp}:3000/uploads/qrcode.png`;
+  const qrData = { host: hostIp, url: url };
 
-  await generateQRCode(hostIp, savePath);
+  await generateQRCode(JSON.stringify(qrData), savePath);
 
   res.sendFile(path.join(publicPath, "index.html"));
 });
