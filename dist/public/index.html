@@ -2,10 +2,53 @@
 <html>
   <head>
     <title>Photo Uploader</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      img {
+        width: 200px;
+        margin-bottom: 20px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      input[type="file"] {
+        margin-bottom: 10px;
+      }
+
+      #uploadbtn {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    <input id="file" type="file" name="photo" />
-    <button id="uploadbtn">upload</button>
+    <div class="container">
+      <img src="http://127.0.0.1:3000/uploads/qrcode.png" />
+      <div style="display: flex; flex-direction: column; align-items: center">
+        <h1>Welcome</h1>
+        <p style="font-size: 20px; font-weight: 600">
+          Scan QR to connect to Denkuan Sebari
+        </p>
+        <!-- <input id="file" type="file" name="photo" />
+        <button id="uploadbtn">Upload</button> -->
+      </div>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const uploadForm = document.getElementById("mainform");
@@ -17,9 +60,21 @@
         console.log(file);
         console.log("handling upload");
       }
-      const socket = io();
-      socket.on("newPhoto", (filename) => {
-        console.log(`New photo uploaded: ${filename}`);
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("http://127.0.0.1:3000/generate-qrcode/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("QR code URL:", data.url);
+          })
+          .catch((error) => {
+            console.error("Failed to generate QR code:", error);
+          });
       });
     </script>
   </body>
